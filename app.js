@@ -54,5 +54,4 @@ function removeTask(e) {
 // clear all tasks
 function clearTasks(e) {
     taskList.innerHTML = "";
-
 }
