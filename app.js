@@ -2,17 +2,18 @@
 const form = document.querySelector('#task-form');
 const taskInput = document.querySelector('#task');
 const taskList = document.querySelector('.collection');
-const clearBtn = document.querySelector("#clear-tasks");
+const clearBtn = document.querySelector('#clear-tasks');
+const filterInput = document.querySelector('#filter');
 
 // define event listeners
 // add task to list - submit button
 form.addEventListener('submit', addTask);
-
 // remove task from list - fas fa-backspace icon
 taskList.addEventListener('click', removeTask);
-
-// remove task list - btn
+// clear tasks list
 clearBtn.addEventListener('click', clearTasks);
+// filter task from list
+filterInput.addEventListener('keyup', filterTasks);
 
 // addTask function
 function addTask(e) {
@@ -46,12 +47,27 @@ function removeTask(e) {
     // is click is over icon - over a tag
     if (e.target.parentElement.classList.contains('secondary-content')) {
         if (confirm("Do you want to remove this task?")) {
-            console.log(e.target.parentElement.parentElement.remove());
+            e.target.parentElement.parentElement.remove();
         }
     }
 }
 
-// clear all tasks
+// clearTasks function
 function clearTasks(e) {
-    taskList.innerHTML = "";
+    taskList.innerHTML = '';
+}
+
+// filterTasks function
+function filterTasks(e) {
+    const text = e.target.value.toLowerCase();
+    document.querySelectorAll('.collection-item').forEach(
+        function (task) {
+            const item = task.firstChild.textContent.toLowerCase();
+            if (item.indexOf(text) != -1) {
+                task.style.display = 'block';
+            } else {
+                task.style.display = 'none';
+            }
+        }
+    );
 }
